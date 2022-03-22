@@ -25,6 +25,7 @@ placementMode = WALL_MODE;
 enemy_num = 1;
 curr_Width = 10;
 curr_Height = 10;
+filename = "level.txt";
 //generates a 50x50 grid, not all will always be used
 tiles = [];
 for (var i = 0; i < MAX_SIZE; i++) {
@@ -78,9 +79,22 @@ function setup() {
 	sel2 = createSelect();
 	sel2.position(76,694);
 	sel2.option("Reach Goal");
-	sel2.option("Eliminate Enemies");
 	sel2.option("Collect Coins");
+	sel2.option("Eliminate Enemies");
 	sel2.selected("Reach Goal");
+
+
+	//LEVEL FILENAME
+	let name_button = createInput("level.txt",type="text");
+	name_button.size(100);
+	name_button.input(nameInput);
+	name_button.position(8,720)
+	//EXPORT BUTTON
+	let button = createButton('Export Level');
+	button.size(100,20);
+	button.position(110,720);
+	button.mousePressed(exportLevel);
+
 }
 
 
@@ -194,4 +208,50 @@ function keyPressed() {
 
   console.log("Mode Selected:",placementMode);
   sel.selected(placementMode);
+}
+
+
+function nameInput() {
+	console.log('filename: ', this.value());
+	filename = this.value();
+}
+function exportLevel() {
+	writer = createWriter(filename);
+	//width
+	writer.print(curr_Width);
+	//height
+	writer.print(curr_Height);
+
+	//picture of map
+	curr_enemy_num = 1;
+	for(var i = 0;i<curr_Width;i++){
+		for(var j=0;j<curr_Height;j++){
+			curr_char = tiles[i][j];
+			if(curr_char == 'e'){
+				curr_char = curr_enemy_num;
+				curr_enemy_num += 1;
+			}
+			writer.write(curr_char);
+		}
+		writer.write('\n');
+	}
+
+	//objective num line
+	if(sel2.value() == "Reach Goal"){
+		obj_num = 1;
+	}else if(sel2.value() == "Collect Coins"){
+		obj_num = 2;
+	}else if(sel2.value() == "Eliminate Enemies"){
+		obj_num = 3;
+	}
+	writer.print(obj_num);
+
+	for(var e = 1;e<curr_enemy_num;e++){
+		writer.print(e);
+		writer.print(0);
+	}
+	writer.close();
+	writer.clear();
+
+
 }
