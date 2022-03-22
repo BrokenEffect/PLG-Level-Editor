@@ -224,8 +224,8 @@ function exportLevel() {
 
 	//picture of map
 	curr_enemy_num = 1;
-	for(var i = 0;i<curr_Width;i++){
-		for(var j=0;j<curr_Height;j++){
+	for(var j = 0;j<curr_Width;j++){
+		for(var i=0;i<curr_Height;i++){
 			curr_char = tiles[i][j];
 			if(curr_char == 'e'){
 				curr_char = curr_enemy_num;
