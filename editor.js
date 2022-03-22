@@ -1,5 +1,5 @@
 //constants
-const SPACE = ' ';
+const SPACE = '.';
 const WALL = '#';
 const PLAYER = 'p';
 const GOAL = 'g';
