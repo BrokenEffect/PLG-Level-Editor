@@ -20,12 +20,15 @@ var cHeight;
 cWidth = 900;
 cHeight = 600;
 scl = 20;
-MAX_SIZE = 30;
+MAX_SIZE = 20;
 placementMode = WALL_MODE;
 enemy_num = 1;
 curr_Width = 10;
 curr_Height = 10;
 filename = "level.txt";
+allowed_move_blocks = -1;
+allowed_if_blocks = -1;
+allowed_loop_blocks = -1;
 //generates a 50x50 grid, not all will always be used
 tiles = [];
 for (var i = 0; i < MAX_SIZE; i++) {
@@ -42,27 +45,27 @@ function setup() {
 	// WIDTH OF MAP
 	let textX = createElement('h5', 'X:');
 	textX.size(100,0);
-	textX.position(8,612);
+	textX.position(8,592);
 	let inpX = createInput(str(10),type="number");
 	inpX.size(50);
 	inpX.input(xInput);
-	inpX.position(30,630)
+	inpX.position(30,610)
 
 	// HEIGHT OF MAP
 	let textY = createElement('h5', 'Y:');
 	textY.size(100,0);
-	textY.position(8,632);
+	textY.position(8,612);
 	let inpY = createInput(str(10),type="number");
 	inpY.size(50);
 	inpY.input(yInput);
-	inpY.position(30,650)
+	inpY.position(30,630)
 
 	//TYPE OF PLACEMENT SELECTION
 	let textM = createElement('h5', 'Mode:');
 	textM.size(100,0);
-	textM.position(8,654);
+	textM.position(8,634);
 	sel = createSelect();
-	sel.position(50, 674);
+	sel.position(50, 654);
 	sel.option(ERASE_MODE);
 	sel.option(WALL_MODE);
 	sel.option(PLAYER_MODE);
@@ -75,28 +78,56 @@ function setup() {
 	//OBJECTIVE SELECTION
 	let textO = createElement('h5', 'Objective:');
 	textO.size(100,0);
-	textO.position(8,674);
+	textO.position(8,654);
 	sel2 = createSelect();
-	sel2.position(76,694);
+	sel2.position(76,674);
 	sel2.option("Reach Goal");
 	sel2.option("Collect Coins");
 	sel2.option("Eliminate Enemies");
 	sel2.selected("Reach Goal");
+
+	//CODE BLOCK ALLOWANCES
+	let descriptiontest = createElement('h5','# of allowed code blocks (-1 for infinite):');
+	descriptiontest.size(150,0);
+	descriptiontest.position(8,684);
+
+	let movestext = createElement('h5', 'Move: ');
+	movestext.size(100,0);
+	movestext.position(8,720);
+	let moves_input = createInput(-1,type="number");
+	moves_input.size(50);
+	moves_input.input(movesInput);
+	moves_input.position(50,740);
+
+	let ifstext = createElement('h5', 'If: ');
+	ifstext.size(100,0);
+	ifstext.position(30,740);
+	let ifs_input = createInput(-1,type="number");
+	ifs_input.size(50);
+	ifs_input.input(ifsInput);
+	ifs_input.position(50,760);
+
+	let loopstext = createElement('h5', 'Loop: ');
+	loopstext.size(100,0);
+	loopstext.position(8,760);
+	let loops_input = createInput(-1,type="number");
+	loops_input.size(50);
+	loops_input.input(loopsInput);
+	loops_input.position(50,780);
 
 
 	//LEVEL FILENAME
 	let name_button = createInput("level.txt",type="text");
 	name_button.size(100);
 	name_button.input(nameInput);
-	name_button.position(8,720)
+	name_button.position(8,810)
 	//EXPORT BUTTON
 	let button = createButton('Export Level');
 	button.size(100,20);
-	button.position(110,720);
+	button.position(110,810);
 	button.mousePressed(exportLevel);
 
 }
-
 
 function draw() {
 	colorMode(HSB, 360, 100, 100);
@@ -210,6 +241,17 @@ function keyPressed() {
   sel.selected(placementMode);
 }
 
+function movesInput() {
+	allowed_move_blocks = this.value();
+}
+
+function ifsInput() {
+	allowed_if_blocks = this.value();
+}
+
+function loopsInput() {
+	allowed_loop_blocks = this.value();
+}
 
 function nameInput() {
 	console.log('filename: ', this.value());
@@ -245,7 +287,12 @@ function exportLevel() {
 		obj_num = 3;
 	}
 	writer.print(obj_num);
+	//code block outputs
+	writer.print(allowed_move_blocks);
+	writer.print(allowed_if_blocks);
+	writer.print(allowed_loop_blocks);
 
+	//enemy output
 	for(var e = 1;e<curr_enemy_num;e++){
 		writer.print(e);
 		writer.print(0);
