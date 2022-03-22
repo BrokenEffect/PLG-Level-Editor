@@ -260,9 +260,9 @@ function nameInput() {
 function exportLevel() {
 	writer = createWriter(filename);
 	//width
-	writer.print(curr_Width);
+	//writer.print(curr_Width);
 	//height
-	writer.print(curr_Height);
+	//writer.print(curr_Height);
 
 	//picture of map
 	curr_enemy_num = 1;
