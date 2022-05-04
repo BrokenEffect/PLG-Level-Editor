@@ -265,11 +265,14 @@ function exportLevel() {
 	//writer.print(curr_Height);
 
 	//picture of map
+	num_coins = 0;
 	for(var i = 0;i<curr_Height;i++){
 		for(var j=0;j<curr_Width;j++){
 			curr_char = tiles[j][i];
 			if(curr_char == 'e'){
 				curr_char = 'e';
+			} else if(curr_char == 'c'){
+				num_coins += 1;
 			}
 			writer.write(curr_char);
 		}
@@ -289,6 +292,7 @@ function exportLevel() {
 	writer.print(allowed_move_blocks);
 	writer.print(allowed_if_blocks);
 	writer.print(allowed_loop_blocks);
+	writer.print(num_coins);
 
 	//enemy output
 	/*
