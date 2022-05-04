@@ -265,13 +265,11 @@ function exportLevel() {
 	//writer.print(curr_Height);
 
 	//picture of map
-	curr_enemy_num = 1;
 	for(var j = 0;j<curr_Width;j++){
 		for(var i=0;i<curr_Height;i++){
 			curr_char = tiles[i][j];
 			if(curr_char == 'e'){
-				curr_char = curr_enemy_num;
-				curr_enemy_num += 1;
+				curr_char = 'E';
 			}
 			writer.write(curr_char);
 		}
@@ -293,10 +291,12 @@ function exportLevel() {
 	writer.print(allowed_loop_blocks);
 
 	//enemy output
+	/*
 	for(var e = 1;e<curr_enemy_num;e++){
 		writer.print(e);
 		writer.print(0);
 	}
+	*/
 	writer.close();
 	writer.clear();
 
