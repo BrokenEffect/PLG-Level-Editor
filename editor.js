@@ -265,11 +265,11 @@ function exportLevel() {
 	//writer.print(curr_Height);
 
 	//picture of map
-	for(var j = 0;j<curr_Width;j++){
-		for(var i=0;i<curr_Height;i++){
-			curr_char = tiles[i][j];
+	for(var i = 0;i<curr_Height;i++){
+		for(var j=0;j<curr_Width;j++){
+			curr_char = tiles[j][i];
 			if(curr_char == 'e'){
-				curr_char = 'E';
+				curr_char = 'e';
 			}
 			writer.write(curr_char);
 		}
